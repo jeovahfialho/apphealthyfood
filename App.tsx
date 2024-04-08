@@ -1,117 +1,74 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useState } from 'react';
+import { SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+// Definindo uma interface para o estado
+interface Dica {
+  dieta: string;
+  atividade: string;
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App: React.FC = () => {
+  const [dica, setDica] = useState<Dica>({
+    dieta: "Coma mais vegetais.",
+    atividade: "Faça uma caminhada de 30 minutos."
+  });
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const atualizarDica = () => {
+    // Simula a atualização das dicas (aqui você pode inserir a lógica para buscar dicas de uma API, por exemplo)
+    setDica({
+      dieta: "Beba pelo menos 2 litros de água.",
+      atividade: "Faça 20 minutos de yoga."
+    });
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Dica do Dia</Text>
+      
+      <Text style={styles.subtitle}>Dieta</Text>
+      <Text style={styles.content}>{dica.dieta}</Text>
+      
+      <Text style={styles.subtitle}>Atividade Física</Text>
+      <Text style={styles.content}>{dica.atividade}</Text>
+      
+      <TouchableOpacity style={styles.button} onPress={atualizarDica}>
+        <Text style={styles.buttonText}>Atualizar Dica</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5fcff',
   },
-  sectionTitle: {
+  title: {
     fontSize: 24,
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  subtitle: {
+    fontSize: 20,
     fontWeight: '600',
+    marginTop: 20,
   },
-  sectionDescription: {
-    marginTop: 8,
+  content: {
     fontSize: 18,
-    fontWeight: '400',
+    textAlign: 'center',
+    margin: 10,
   },
-  highlight: {
-    fontWeight: '700',
+  button: {
+    backgroundColor: '#6200ee',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 18,
   },
 });
 
